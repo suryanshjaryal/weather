@@ -1,15 +1,16 @@
 package com.example.weather_app.model;
 
+import com.sun.tools.javac.Main;
+
 import java.util.List;
 
 public class WeatherResponse {
+
     private String name;
     private Sys sys;
     private List<Weather> weather;
     private Main main;
     private Wind wind;
-
-    // Getters and setters
 
     public String getName() {
         return name;
@@ -51,10 +52,8 @@ public class WeatherResponse {
         this.wind = wind;
     }
 
-    public static class Sys {
+    public static class Sys{
         private String country;
-
-        // Getters and setters
 
         public String getCountry() {
             return country;
@@ -64,12 +63,9 @@ public class WeatherResponse {
             this.country = country;
         }
     }
-
-    public static class Weather {
+    public static class Weather{
         private int id;
         private String description;
-
-        // Getters and setters
 
         public int getId() {
             return id;
@@ -87,12 +83,9 @@ public class WeatherResponse {
             this.description = description;
         }
     }
-
-    public static class Main {
+    public static class Main{
         private double temp;
         private int humidity;
-
-        // Getters and setters
 
         public double getTemp() {
             return temp;
@@ -111,10 +104,8 @@ public class WeatherResponse {
         }
     }
 
-    public static class Wind {
+    public static class Wind{
         private double speed;
-
-        // Getters and setters
 
         public double getSpeed() {
             return speed;
