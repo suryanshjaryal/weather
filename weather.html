@@ -9,26 +9,40 @@
     <link rel="stylesheet" type="text/css" href="https://suryanshjaryal.github.io/weather/css/weather.css">
 </head>
 <body>
-<div class="container" th:action="@{/weather}">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body text-center">
-                    <h1 class="card-title">Weather in <span th:text="${city}">City</span>, <span th:text="${country}">Country</span></h1>
-                    <span th:classappend="${weatherIcon} + ' weather-icon'"></span>
-                    <p class="card-text"><strong>Description:</strong> <span th:text="${weatherDescription}">Description</span></p>
-                    <p class="card-text"><strong>Temperature:</strong> <span th:text="${temperature}">Temperature</span>°C</p>
-                    <p class="card-text"><strong>Humidity:</strong> <span th:text="${humidity}">Humidity</span>%</p>
-                    <p class="card-text"><strong>Wind Speed:</strong> <span th:text="${windSpeed}">Wind Speed</span> m/s</p>
+                    <h1 class="card-title">Weather in <span id="city-name">City</span></h1>
+                    <p class="card-text" id="weather-info">Loading weather data...</p>
                     <a href="/" class="btn btn-secondary btn-block">Back</a>
-                    <div th:if="${error}" class="alert alert-danger mt-3">
-                        <p>Error: <span th:text="${error}"></span></p>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const city = urlParams.get('city');
+    document.getElementById('city-name').textContent = city;
+
+    // Fetch weather data from an API and display it (replace 'YOUR_API_KEY' with your actual API key)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=YOUR_API_KEY&units=metric`)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('weather-info').innerHTML = `
+                <strong>Description:</strong> ${data.weather[0].description} <br>
+                <strong>Temperature:</strong> ${data.main.temp}°C <br>
+                <strong>Humidity:</strong> ${data.main.humidity}% <br>
+                <strong>Wind Speed:</strong> ${data.wind.speed} m/s
+            `;
+        })
+        .catch(error => {
+            document.getElementById('weather-info').textContent = 'Error loading weather data.';
+        });
+</script>
 
 <!-- Bootstrap JS and dependencies -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
